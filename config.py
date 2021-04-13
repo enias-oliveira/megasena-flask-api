@@ -17,14 +17,14 @@ class Config:
 class DevelopmentConfig(Config):
     db_name_dev = env.str("DB_NAME_DEV")
     SQLALCHEMY_DATABASE_URI = (
-        f"postgres://{db_username}:{db_password}@{db_host_port}/{db_name_dev}"
+        f"postgresql://{db_username}:{db_password}@{db_host_port}/{db_name_dev}"
     )
 
 
 class TestConfig(Config):
     db_name_test = env.str("DB_NAME_TEST")
     SQLALCHEMY_DATABASE_URI = (
-        f"postgres://{db_username}:{db_password}@{db_host_port}/{db_name_test}"
+        f"postgresql://{db_username}:{db_password}@{db_host_port}/{db_name_test}"
     )
 
 
