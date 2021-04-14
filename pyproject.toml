@@ -15,6 +15,7 @@ psycopg2-binary = "^2.8.6"
 flask-marshmallow = "^0.14.0"
 marshmallow-sqlalchemy = "^0.24.2"
 marshmallow = "^3.11.1"
+Flask-JWT-Extended = "^4.1.0"
 
 [tool.poetry.dev-dependencies]
 
