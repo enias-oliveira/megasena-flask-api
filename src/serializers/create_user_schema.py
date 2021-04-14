@@ -1,7 +1,7 @@
 from marshmallow import Schema, fields
 
 
-class CreateUserRequestSchema(Schema):
+class CreateUserSchema(Schema):
     """
     POST: /api/users
     {
@@ -14,3 +14,6 @@ class CreateUserRequestSchema(Schema):
     name = fields.Str(required=True)
     email = fields.Str(required=True)
     password = fields.Str(required=True)
+
+
+create_user_schema = CreateUserSchema()
