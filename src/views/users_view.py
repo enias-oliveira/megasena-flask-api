@@ -1,4 +1,6 @@
+from datetime import timedelta
 from flask import Blueprint, request, current_app
+from flask_jwt_extended import create_access_token
 from http import HTTPStatus
 
 import sqlalchemy
@@ -41,3 +43,23 @@ def create_user():
 
     serialized_user = user_model_schema.dump(new_user)
     return serialized_user, HTTPStatus.CREATED
+
+
+@users_bp.route("/login", methods=["POST"])
+def log_user():
+    body = request.get_json()
+    email = body["email"]
+    password = body["password"]
+
+    logged_user: UserModel = UserModel.query.filter_by(email=email).first()
+
+    if not logged_user or not logged_user.validate_password(password):
+        return {
+            "error": "Invalid user credentials or user not found."
+        }, HTTPStatus.FORBIDDEN
+
+    access_token = create_access_token(
+        identity=logged_user.id, expires_delta=timedelta(days=7)
+    )
+
+    return {"access_token": access_token}, HTTPStatus.CREATED
