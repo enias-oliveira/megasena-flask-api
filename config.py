@@ -21,8 +21,7 @@ class DevelopmentConfig(Config):
 
 
 class TestConfig(Config):
-    db_name_test = env.str("DB_NAME_TEST")
-    SQLALCHEMY_DATABASE_URI = f"{db_uri}{db_name_test}"
+    ...
 
 
 config_selector = {"development": DevelopmentConfig, "test": TestConfig}

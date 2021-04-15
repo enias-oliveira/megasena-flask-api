@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "a962a77d-6078-43a8-8e8f-71c870bcb765",
+		"name": "Flaks API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"ioasys\",\n\t\"email\": \"ioasys@mail.com\",\n\t\"password\" : \"b4ckEnd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/signup",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "log user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"ioasys@mail.com\",\n\t\"password\" : \"b4ckEnd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/login",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit user name",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"python\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/1",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit user email",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\" : \"python@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/1",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit user password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"password\" : \"PythonNoobMaster\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/1",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit all user data",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\" : \"Potato\",\n\t\"password\" : \"BigPotato\",\n\t\"email\" : \"potato@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/1",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{flask}}/api/users/1",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "megasenas",
+			"item": [
+				{
+					"name": "create megasena user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"name\" : \"megasena\",\n\t\"email\": \"megasena@mail.com\",\n\t\"password\" : \"Mega\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/users/signup",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create ticket",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"numbers\" : 10\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{flask}}/api/megasenas",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"megasenas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "last megasena draw",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_megasena_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{flask}}/api/megasenas/draws",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"megasenas",
+								"draws"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list tickets",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{user_megasena_access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{flask}}/api/megasenas",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"megasenas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "last megasena result",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{flask}}/api/megasenas/results",
+							"host": [
+								"{{flask}}"
+							],
+							"path": [
+								"api",
+								"megasenas",
+								"results"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{user_megasena_access_token}}",
+						"type": "string"
+					}
+				]
+			}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{user_ioasys_access_token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "flask",
+			"value": "http://127.0.0.1:5001"
+		},
+		{
+			"key": "user_ioasys_access_token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxODUxODY5NywianRpIjoiZmE3ZThlMjgtYzRiYS00ZGRmLTk4MTgtMWIwYjhkMDkzN2Q5IiwibmJmIjoxNjE4NTE4Njk3LCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoxLCJleHAiOjE2MTkxMjM0OTd9.JnTn2g06_50DSgFPuH6a_KCHKXIHq6-_9EP7KYWcYbA"
+		},
+		{
+			"key": "user_megasena_access_token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTYxODUyMTU1MiwianRpIjoiMmI5OTM5ZTEtZDkzMS00ZTMzLWE1NGItNDY4OTM3YzBjNmNlIiwibmJmIjoxNjE4NTIxNTUyLCJ0eXBlIjoiYWNjZXNzIiwic3ViIjoyLCJleHAiOjE2MTkxMjYzNTJ9.tFTmEjcBe63arR-6ZJQggZk8Cy-Z7wKIdlhgHtGrPys"
+		}
+	]
+}
