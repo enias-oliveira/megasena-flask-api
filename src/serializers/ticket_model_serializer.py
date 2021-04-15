@@ -4,7 +4,7 @@ import json
 
 
 def TicketSerializer(ticket: TicketModel) -> dict:
-    ticket_numbers = ticket.ticket_numbers
+    ticket_numbers = ticket.numbers
     serialized_ticket = json.loads(ticket_numbers)
 
     return {
@@ -17,5 +17,5 @@ def TicketsSerializer(tickets: list[TicketModel]) -> list[dict]:
     user_id = tickets[0].user_id
     return {
         "user_id": user_id,
-        "megasena_tickets": [TicketSerializer(ticket) for ticket in tickets],
+        "megasena_tickets": [TicketSerializer(ticket) for ticket in tickets[::-1]],
     }

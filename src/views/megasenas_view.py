@@ -49,7 +49,7 @@ def create_ticket():
 
     user_id = get_jwt_identity()
     ticket: TicketModel = TicketModel(
-        ticket_numbers=ticket_numbers_serialized, user_id=user_id
+        numbers=ticket_numbers_serialized, user_id=user_id
     )
 
     session = current_app.db.session
@@ -63,7 +63,7 @@ def create_ticket():
     return serialized_ticket, HTTPStatus.OK
 
 
-@megasenas_bp.route("/draw", methods=["GET"])
+@megasenas_bp.route("/draws", methods=["GET"])
 @jwt_required()
 def read_draw():
 
@@ -72,3 +72,26 @@ def read_draw():
     draw_numbers = draw_numbers_supplier()
 
     return {"latest_draw": draw_numbers}, HTTPStatus.OK
+
+
+@megasenas_bp.route("/results", methods=["GET"])
+@jwt_required()
+def read_results():
+    user_id = get_jwt_identity()
+    user: UserModel = UserModel.query.get(user_id)
+    last_ticket = user.ticket_list[-1]
+
+    from src.services.ticket_numbers import ticket_numbers_string_to_list
+
+    last_ticket_numbers = ticket_numbers_string_to_list(last_ticket.numbers)
+
+    from src.services.megasena_draw import get_correct_ticket_numbers_from_draw
+
+    correct_ticket_numbers = get_correct_ticket_numbers_from_draw(last_ticket_numbers)
+
+    return {
+        "user_id": user_id,
+        "ticket_id": last_ticket.id,
+        "correct_count": len(correct_ticket_numbers),
+        "correct_numbers": correct_ticket_numbers,
+    }, HTTPStatus.OK

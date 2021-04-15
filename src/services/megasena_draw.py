@@ -14,3 +14,10 @@ def draw_numbers_supplier() -> list:
     draw_numbers = [int(span.text) for span in draw_spans]
 
     return draw_numbers
+
+
+def get_correct_ticket_numbers_from_draw(ticket_numbers: list[int]) -> list[int]:
+    draw_numbers = set(draw_numbers_supplier())
+    correct_numbers = set(ticket_numbers).intersection(draw_numbers)
+
+    return list(correct_numbers)
