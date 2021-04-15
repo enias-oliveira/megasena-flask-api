@@ -89,9 +89,17 @@ def read_results():
 
     correct_ticket_numbers = get_correct_ticket_numbers_from_draw(last_ticket_numbers)
 
+    from src.services.megasena_draw import draw_numbers_supplier
+
+    last_draw = draw_numbers_supplier()
+
     return {
         "user_id": user_id,
-        "ticket_id": last_ticket.id,
+        "last_ticket": {
+            "ticket_id": last_ticket.id,
+            "ticket_numbers": last_ticket_numbers,
+        },
+        "last_megasena_draw": last_draw,
         "correct_count": len(correct_ticket_numbers),
         "correct_numbers": correct_ticket_numbers,
     }, HTTPStatus.OK
