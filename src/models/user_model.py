@@ -10,6 +10,8 @@ class UserModel(db.Model):
     email = db.Column(db.String, nullable=False, unique=True)
     password_hash = db.Column(db.String, nullable=True)
 
+    ticket_list = db.relationship("TicketModel", backref="user")
+
     def validate_password(self, given_password: str) -> bool:
         return check_password_hash(self.password_hash, given_password)
 

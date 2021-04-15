@@ -3,7 +3,11 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from http import HTTPStatus
 
-from src.services.ticket_numbers import ticket_numbers_creator
+from src.models.ticket_model import TicketModel
+from src.services.ticket_numbers import (
+    ticket_numbers_creator,
+    ticket_numbers_list_to_string,
+)
 
 
 megasenas_bp = Blueprint("megasenas", __name__, url_prefix="/api/megasenas")
@@ -15,6 +19,7 @@ def hello_megasena():
 
 
 @megasenas_bp.route("", methods=["POST"])
+@jwt_required()
 def create_ticket():
     body = request.get_json()
 
@@ -29,5 +34,15 @@ def create_ticket():
 
     request_numbers = body.get("numbers")
     ticket_numbers = ticket_numbers_creator(request_numbers)
+    ticket_numbers_serialized = ticket_numbers_list_to_string(ticket_numbers)
 
-    return {"data": ticket_numbers}, HTTPStatus.OK
+    user_id = get_jwt_identity()
+    ticket: TicketModel = TicketModel(
+        ticket_numbers=ticket_numbers_serialized, user_id=user_id
+    )
+
+    session = current_app.db.session
+    session.add(ticket)
+    session.commit()
+
+    return {"user_id": user_id, "data": ticket_numbers}, HTTPStatus.OK

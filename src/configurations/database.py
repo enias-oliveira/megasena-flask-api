@@ -10,3 +10,5 @@ def init_app(app: Flask):
     app.db = db
 
     from src.models.user_model import UserModel
+
+    from src.models.ticket_model import TicketModel
