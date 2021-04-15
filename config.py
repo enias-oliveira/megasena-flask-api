@@ -5,7 +5,8 @@ env.read_env()
 
 db_username = env.str("DB_USERNAME")
 db_password = env.str("DB_PASSWORD")
-db_host_port = env.str("DB_HOST_PORT")
+db_host = env.str("DB_HOST")
+db_uri = f"postgresql://{db_username}:{db_password}@{db_host}:5432/"
 
 
 class Config:
@@ -16,16 +17,12 @@ class Config:
 
 class DevelopmentConfig(Config):
     db_name_dev = env.str("DB_NAME_DEV")
-    SQLALCHEMY_DATABASE_URI = (
-        f"postgresql://{db_username}:{db_password}@{db_host_port}/{db_name_dev}"
-    )
+    SQLALCHEMY_DATABASE_URI = f"{db_uri}{db_name_dev}"
 
 
 class TestConfig(Config):
     db_name_test = env.str("DB_NAME_TEST")
-    SQLALCHEMY_DATABASE_URI = (
-        f"postgresql://{db_username}:{db_password}@{db_host_port}/{db_name_test}"
-    )
+    SQLALCHEMY_DATABASE_URI = f"{db_uri}{db_name_test}"
 
 
 config_selector = {"development": DevelopmentConfig, "test": TestConfig}

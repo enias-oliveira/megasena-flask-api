@@ -16,6 +16,8 @@ flask-marshmallow = "^0.14.0"
 marshmallow-sqlalchemy = "^0.24.2"
 marshmallow = "^3.11.1"
 Flask-JWT-Extended = "^4.1.0"
+cfscrape = "^2.1.1"
+bs4 = "^0.0.1"
 
 [tool.poetry.dev-dependencies]
 

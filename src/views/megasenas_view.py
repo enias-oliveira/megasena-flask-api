@@ -14,7 +14,7 @@ from src.services.ticket_numbers import (
 megasenas_bp = Blueprint("megasenas", __name__, url_prefix="/api/megasenas")
 
 
-@megasenas_bp.route("")
+@megasenas_bp.route("", methods=["GET"])
 @jwt_required()
 def list_tickets():
     user_id = get_jwt_identity()
@@ -61,3 +61,14 @@ def create_ticket():
     serialized_ticket = TicketSerializer(ticket)
 
     return serialized_ticket, HTTPStatus.OK
+
+
+@megasenas_bp.route("/draw", methods=["GET"])
+@jwt_required()
+def read_draw():
+
+    from src.services.megasena_draw import draw_numbers_supplier
+
+    draw_numbers = draw_numbers_supplier()
+
+    return {"latest_draw": draw_numbers}, HTTPStatus.OK
