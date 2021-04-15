@@ -1,6 +1,10 @@
 from datetime import timedelta
 from flask import Blueprint, request, current_app
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import (
+    create_access_token,
+    jwt_required,
+    get_jwt_identity,
+)
 from http import HTTPStatus
 
 import sqlalchemy
@@ -51,6 +55,15 @@ def log_user():
     email = body["email"]
     password = body["password"]
 
+    from src.serializers.log_user_schema import log_user_schema
+
+    request_errors = log_user_schema.validate(body)
+
+    if request_errors:
+        return {
+            "msg": "Invalid or missing User request fields."
+        }, HTTPStatus.UNPROCESSABLE_ENTITY
+
     logged_user: UserModel = UserModel.query.filter_by(email=email).first()
 
     if not logged_user or not logged_user.validate_password(password):
@@ -63,3 +76,37 @@ def log_user():
     )
 
     return {"access_token": access_token}, HTTPStatus.CREATED
+
+
+@users_bp.route("/<int:id>", methods=["PUT", "PATCH"])
+@jwt_required()
+def edit_user(id):
+    if get_jwt_identity() != id:
+        return {"msg": "Invalid JWT token."}, HTTPStatus.UNAUTHORIZED
+
+    body = request.get_json()
+
+    from src.serializers.update_user_schema import update_user_schema
+
+    request_errors = update_user_schema.validate(body)
+
+    if request_errors:
+        return {
+            "msg": "Invalid or missing User request fields."
+        }, HTTPStatus.UNPROCESSABLE_ENTITY
+
+    session = current_app.db.session
+    new_password = body.pop("password", "")
+
+    user: UserModel = UserModel.query.get(id)
+
+    if new_password:
+        user.password = new_password
+        session.add(user)
+
+    if body:
+        UserModel.query.filter_by(id=id).update(body)
+
+    session.commit()
+
+    return {}, HTTPStatus.NO_CONTENT
