@@ -82,7 +82,7 @@ def log_user():
 @jwt_required()
 def edit_user(id):
     if get_jwt_identity() != id:
-        return {"msg": "Invalid JWT token."}, HTTPStatus.UNAUTHORIZED
+        return {"msg": "Invalid token."}, HTTPStatus.UNAUTHORIZED
 
     body = request.get_json()
 
@@ -107,6 +107,22 @@ def edit_user(id):
     if body:
         UserModel.query.filter_by(id=id).update(body)
 
+    session.commit()
+
+    return {}, HTTPStatus.NO_CONTENT
+
+
+@users_bp.route("/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_user(id):
+    if get_jwt_identity() != id:
+        return {"msg": "Invalid token."}, HTTPStatus.UNAUTHORIZED
+
+    session = current_app.db.session
+
+    user: UserModel = UserModel.query.get(id)
+
+    session.delete(user)
     session.commit()
 
     return {}, HTTPStatus.NO_CONTENT
