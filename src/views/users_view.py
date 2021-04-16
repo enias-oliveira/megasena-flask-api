@@ -75,7 +75,10 @@ def log_user():
         identity=logged_user.id, expires_delta=timedelta(days=7)
     )
 
-    return {"access_token": access_token}, HTTPStatus.CREATED
+    return {
+        "user_id": logged_user.id,
+        "access_token": access_token,
+    }, HTTPStatus.CREATED
 
 
 @users_bp.route("/<int:id>", methods=["PUT", "PATCH"])
