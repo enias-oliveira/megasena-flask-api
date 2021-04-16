@@ -79,7 +79,7 @@ Para poder fazer todas as requisições, é recomendado criar esses 2 usúarios 
 
 Segue uma lista de todos os endpoints com exemplos de requisições e respostas.
 
-# Users
+### Users
 
 - Criação de usuário
 ``` http
@@ -168,7 +168,7 @@ Response: NO CONTENT, 204
 ```
 
 
-# Megasena
+### Megasena
 
 - Criar novo jogo
 ``` http
