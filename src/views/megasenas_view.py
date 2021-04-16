@@ -5,10 +5,7 @@ from http import HTTPStatus
 
 from src.models.ticket_model import TicketModel
 from src.models.user_model import UserModel
-from src.services.ticket_numbers import (
-    ticket_numbers_creator,
-    ticket_numbers_list_to_string,
-)
+from src.services.ticket_numbers import ticket_numbers_creator
 
 
 megasenas_bp = Blueprint("megasenas", __name__, url_prefix="/api/megasenas")
@@ -43,14 +40,13 @@ def create_ticket():
             "msg": "Invalid or missing Megasena request fields."
         }, HTTPStatus.UNPROCESSABLE_ENTITY
 
-    request_numbers = body.get("numbers")
-    ticket_numbers = ticket_numbers_creator(request_numbers)
-    ticket_numbers_serialized = ticket_numbers_list_to_string(ticket_numbers)
-
     user_id = get_jwt_identity()
-    ticket: TicketModel = TicketModel(
-        numbers=ticket_numbers_serialized, user_id=user_id
-    )
+    ticket: TicketModel = TicketModel(user_id=user_id)
+
+    request_numbers = body.get("numbers")
+    numbers = ticket_numbers_creator(request_numbers)
+
+    ticket.ticket_numbers = numbers
 
     session = current_app.db.session
     session.add(ticket)
@@ -79,15 +75,11 @@ def read_draw():
 def read_results():
     user_id = get_jwt_identity()
     user: UserModel = UserModel.query.get(user_id)
-    last_ticket = user.ticket_list[-1]
+    last_ticket: TicketModel = user.ticket_list[-1]
 
-    from src.services.ticket_numbers import ticket_numbers_string_to_list
+    from src.services.megasena_draw import get_correct_ticket_numbers
 
-    last_ticket_numbers = ticket_numbers_string_to_list(last_ticket.numbers)
-
-    from src.services.megasena_draw import get_correct_ticket_numbers_from_draw
-
-    correct_ticket_numbers = get_correct_ticket_numbers_from_draw(last_ticket_numbers)
+    correct_ticket_numbers = get_correct_ticket_numbers(last_ticket.ticket_numbers)
 
     from src.services.megasena_draw import draw_numbers_supplier
 
@@ -97,7 +89,7 @@ def read_results():
         "user_id": user_id,
         "last_ticket": {
             "ticket_id": last_ticket.id,
-            "ticket_numbers": last_ticket_numbers,
+            "ticket_numbers": last_ticket.ticket_numbers,
         },
         "last_megasena_draw": last_draw,
         "correct_count": len(correct_ticket_numbers),
