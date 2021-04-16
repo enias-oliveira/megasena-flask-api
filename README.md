@@ -26,7 +26,10 @@ Dito isso, o arquivo "requirements.txt" dá suporte para o uso do Pip.
 ## Banco de Dados
 
 A API salva usuários e megasenas em um banco de dados PostgreSQL atráves do SQLAlchemy.
+
 É necessário criar um Banco de dados local sem nenhuma configuração ou tabela.
+
+Também é preciso de um Banco de dados local separado para os testes.
 
 ## Variaveis de ambiente
 
@@ -47,6 +50,7 @@ DB_USERNAME={username} # Nome do usuário dono do banco de dados local
 DB_PASSWORD={password} # Senha do usuário ...
 DB_HOST={host} # Host do servidor do banco de dados, geralmente localhost ou http://127.0.0.1 resolve
 DB_NAME_DEV={db_name} # Nome do banco de dados local
+DB_NAME_TEST={test_db_name} # Nome do banco de dados local para teste
 ```
 
 
@@ -287,4 +291,20 @@ Response: {
     ]
 }
 ```
+
+
+## Testes
+
+Para executar os testes, é preciso alter duas variáveis de ambientes no arquivo ".env".
+
+``` 
+FLASK_ENV=test # Para que o flask use a configuração de testes
+DB_NAME_TEST={test_db_name} # Para usar o banco de dados teste
+```
+
+Feitos os ajustes é só rodar os testes usando o pytest do ambiente virtual.
+
+*Na linha de comando, usando Bash:*
+`python -m pytest`
+
 
